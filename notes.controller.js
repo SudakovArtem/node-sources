@@ -17,6 +17,14 @@ async function addNote(title) {
   console.log(chalk.bgGreen('Note was added!'))
 }
 
+async function removeNote(id) {
+  const notes = await getNotes()
+  const filteredNotes = notes.filter((note) => note.id !== id.toString())
+
+  await saveNotes(filteredNotes)
+  console.log(chalk.bgRed('Note deleted!'))
+}
+
 async function getNotes() {
   const notes = await fs.readFile(notesPath, {encoding: 'utf-8'})
   return Array.isArray(JSON.parse(notes)) ? JSON.parse(notes) : []
@@ -31,10 +39,10 @@ async function printNotes() {
 
   console.log(chalk.bgBlue('Here is the list of notes:'))
   notes.forEach(note => {
-    console.log(chalk.bgWhite(note.id), chalk.blue(note.title))
+    console.log(chalk.white(note.id), chalk.blue(note.title))
   })
 }
 
 module.exports = {
-  addNote, printNotes
+  addNote, printNotes, removeNote
 }

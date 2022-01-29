@@ -30,8 +30,8 @@ yargs.command({
 yargs.command({
   command: 'remove',
   describe: 'Remove note by id',
-  async handler() {
-    printNotes()
+  async handler({ id }) {
+    removeNote(id)
   }
 })
 
